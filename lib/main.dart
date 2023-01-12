@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'HomePage/home_page.dart';
+import 'LoginPage/login-page.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -7,11 +10,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(const RootPage());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class RootPage extends StatelessWidget {
+  const RootPage({super.key});
 
   // This widget is the root of your application.
   @override
@@ -22,13 +25,15 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text('Siema'),
-            ],
-          ),
+        body: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            final user = snapshot.data;
+            if (user == null) {
+              return LoginPage();
+            }
+            return const HomePage();
+          },
         ),
       ),
     );
