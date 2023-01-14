@@ -16,26 +16,17 @@ void main() async {
 class RootPage extends StatelessWidget {
   const RootPage({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        body: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            final user = snapshot.data;
-            if (user == null) {
-              return LoginPage();
-            }
-            return HomePage();
-          },
-        ),
-      ),
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        final user = snapshot.data;
+        if (user == null) {
+          return LoginPage();
+        }
+        return HomePage(user: user);
+      },
     );
   }
 }
