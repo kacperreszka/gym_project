@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -21,33 +22,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Builder(builder: (context) {
         if (currentIndex == 0) {
-          return const Center(
-            child: Text('Jeden'),
-          );
+          return const TrainingPageContent();
         }
         if (currentIndex == 1) {
-          return Center(
-            child: ListView(
-              children: const [
-                Text('Siema'),
-              ],
-            ),
-          );
+          return const AchievementsPageContent();
         }
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Jesteś zalogowany jako ${widget.user.email}'),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                  },
-                  child: const Text('Wyloguj'))
-            ],
-          ),
-        );
+        return MyAccountPageContent(email: widget.user.email);
       }),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
@@ -63,5 +43,79 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+}
+
+class MyAccountPageContent extends StatelessWidget {
+  const MyAccountPageContent({
+    Key? key,
+    required this.email,
+  }) : super(key: key);
+
+  final String? email;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Jesteś zalogowany jako $email'),
+          const SizedBox(height: 20),
+          ElevatedButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              child: const Text('Wyloguj'))
+        ],
+      ),
+    );
+  }
+}
+
+class AchievementsPageContent extends StatelessWidget {
+  const AchievementsPageContent({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ListView(
+        children: const [
+          Text('Siema'),
+        ],
+      ),
+    );
+  }
+}
+
+class TrainingPageContent extends StatelessWidget {
+  const TrainingPageContent({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+        stream: FirebaseFirestore.instance.collection('categories').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Text('Coś poszło nie tak');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text('Trwa ładowanie danych z bazy');
+          }
+
+          final documents = snapshot.data!.docs;
+
+          return ListView(
+            children: [
+              for (final document in documents) ...[
+                Text(document['name']),
+              ],
+            ],
+          );
+        });
   }
 }

@@ -14,7 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var errorMessage = 'Nie ma takiego użytkownika';
+  var errorMessage = '';
   var isCreatingAccount = false;
 
   @override
