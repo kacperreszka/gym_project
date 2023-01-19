@@ -1,14 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfire_ui/auth.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
     Key? key,
-    required this.user,
   }) : super(key: key);
-
-  final User user;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -27,7 +25,7 @@ class _HomePageState extends State<HomePage> {
         if (currentIndex == 1) {
           return const AchievementsPageContent();
         }
-        return MyAccountPageContent(email: widget.user.email);
+        return MyAccountPageContent();
       }),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
@@ -49,10 +47,7 @@ class _HomePageState extends State<HomePage> {
 class MyAccountPageContent extends StatelessWidget {
   const MyAccountPageContent({
     Key? key,
-    required this.email,
   }) : super(key: key);
-
-  final String? email;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +55,7 @@ class MyAccountPageContent extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Jesteś zalogowany jako $email'),
+          const Text('Jesteś zalogowany jako '),
           const SizedBox(height: 20),
           ElevatedButton(
               onPressed: () {

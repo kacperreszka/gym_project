@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'RootPage/root_page.dart';
+import 'package:gym_project/futures/auth/pages/auth_gate.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -20,7 +20,7 @@ class StartPage extends StatelessWidget {
       title: 'Gym Project',
       theme: ThemeData(primarySwatch: Colors.amber),
       home: const Scaffold(
-        body: RootPage(),
+        body: AuthGate(),
       ),
     );
   }
