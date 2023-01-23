@@ -1,6 +1,7 @@
-
 import 'package:flutter/material.dart';
 
+import '../achevements/achevements_page_content.dart';
+import '../add_page/add_page_content.dart';
 import '../auth/pages/user_profile.dart';
 import '../training/traning_page_content.dart';
 
@@ -38,6 +39,9 @@ class _HomePageState extends State<HomePage> {
         if (currentIndex == 0) {
           return const TrainingPageContent();
         }
+        if (currentIndex == 1) {
+          return const AddPageContent();
+        }
         return const AchievementsPageContent();
       }),
       bottomNavigationBar: BottomNavigationBar(
@@ -49,6 +53,8 @@ class _HomePageState extends State<HomePage> {
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.whatshot), label: 'Trening'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add), label: 'Nowe Ćwiczenia'),
           BottomNavigationBarItem(icon: Icon(Icons.poll), label: 'Osiągnięcia'),
         ],
       ),
@@ -56,19 +62,4 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class AchievementsPageContent extends StatelessWidget {
-  const AchievementsPageContent({
-    Key? key,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: ListView(
-        children: const [
-          Text('Siema'),
-        ],
-      ),
-    );
-  }
-}
