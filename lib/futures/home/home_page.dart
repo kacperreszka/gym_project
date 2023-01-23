@@ -54,12 +54,10 @@ class _HomePageState extends State<HomePage> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.whatshot), label: 'Trening'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.add), label: 'Nowe Ćwiczenia'),
+              icon: Icon(Icons.add_box), label: 'Nowe Ćwiczenia'),
           BottomNavigationBarItem(icon: Icon(Icons.poll), label: 'Osiągnięcia'),
         ],
       ),
     );
   }
 }
-
-

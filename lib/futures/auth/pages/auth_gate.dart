@@ -13,7 +13,6 @@ class AuthGate extends StatelessWidget {
       builder: (context, snapshot) {
         return StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
-          // If the user is already signed-in, use it as initial data
           initialData: FirebaseAuth.instance.currentUser,
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
@@ -23,7 +22,6 @@ class AuthGate extends StatelessWidget {
               ]);
             }
 
-            // Render your application if authenticated
             return const HomePage();
           },
         );
