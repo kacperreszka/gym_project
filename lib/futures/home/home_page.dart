@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 
 import '../auth/pages/user_profile.dart';
+import '../training/traning_page_content.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -70,35 +70,5 @@ class AchievementsPageContent extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class TrainingPageContent extends StatelessWidget {
-  const TrainingPageContent({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: FirebaseFirestore.instance.collection('categories').snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Text('Coś poszło nie tak');
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Trwa ładowanie danych z bazy');
-          }
-
-          final documents = snapshot.data!.docs;
-
-          return ListView(
-            children: [
-              for (final document in documents) ...[
-                Text(document['name']),
-              ],
-            ],
-          );
-        });
   }
 }
