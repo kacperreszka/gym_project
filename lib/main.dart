@@ -19,6 +19,7 @@ class StartPage extends StatelessWidget {
     return MaterialApp(
       title: 'Gym Project',
       theme: ThemeData(primarySwatch: Colors.amber),
+      
       home: const Scaffold(
         body: AuthGate(),
       ),

@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/auth.dart';
+
+import '../auth/pages/user_profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -18,14 +19,26 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Gym Project'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const UserProfile(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.person),
+          ),
+        ],
+      ),
       body: Builder(builder: (context) {
         if (currentIndex == 0) {
           return const TrainingPageContent();
         }
-        if (currentIndex == 1) {
-          return const AchievementsPageContent();
-        }
-        return MyAccountPageContent();
+        return const AchievementsPageContent();
       }),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
@@ -37,31 +50,6 @@ class _HomePageState extends State<HomePage> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.whatshot), label: 'Trening'),
           BottomNavigationBarItem(icon: Icon(Icons.poll), label: 'Osiągnięcia'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Konto'),
-        ],
-      ),
-    );
-  }
-}
-
-class MyAccountPageContent extends StatelessWidget {
-  const MyAccountPageContent({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('Jesteś zalogowany jako '),
-          const SizedBox(height: 20),
-          ElevatedButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              child: const Text('Wyloguj'))
         ],
       ),
     );
