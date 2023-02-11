@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../achevements/achevements_page_content.dart';
-import '../add_page/add_page_content.dart';
+import 'achevements/achevements_page_content.dart';
+import 'add_page/add_page_content.dart';
 import '../auth/pages/user_profile.dart';
-import '../training/traning_page_content.dart';
+import 'training/traning_page_content.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -52,10 +52,18 @@ class _HomePageState extends State<HomePage> {
           });
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.whatshot), label: 'Trening'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.add_box), label: 'Nowe Ćwiczenia'),
-          BottomNavigationBarItem(icon: Icon(Icons.poll), label: 'Osiągnięcia'),
+            icon: Icon(Icons.whatshot),
+            label: 'Trening',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_box),
+            label: 'Nowe Ćwiczenia',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.poll),
+            label: 'Osiągnięcia',
+          ),
         ],
       ),
     );

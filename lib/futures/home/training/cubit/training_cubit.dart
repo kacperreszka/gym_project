@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:meta/meta.dart';
+import 'package:gym_project/models/item__model.dart';
 
 part 'training_state.dart';
 
@@ -19,22 +19,19 @@ class TrainingCubit extends Cubit<TrainingState> {
   StreamSubscription? _streamSubscription;
 
   Future<void> start() async {
-    emit(
-      const TrainingState(
-        documents: [],
-        errorMessage: '',
-        isLoading: true,
-      ),
-    );
-
     _streamSubscription = FirebaseFirestore.instance
         .collection('categories')
         .snapshots()
         .listen((data) {
+      final itemModels = data.docs.map((doc) {
+        return ItemModel(
+          document: data.docs,
+        );
+      }).toList();
       emit(
         TrainingState(
-          documents: data.docs,
-          isLoading: false,
+          documents: itemModels,
+          isLoading: true,
           errorMessage: '',
         ),
       );
@@ -48,11 +45,5 @@ class TrainingCubit extends Cubit<TrainingState> {
           ),
         );
       });
-  }
-
-  @override
-  Future<void> close() {
-    _streamSubscription?.cancel();
-    return super.close();
   }
 }
